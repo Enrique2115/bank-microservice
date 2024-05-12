@@ -1,1 +1,19 @@
-spring.application.name=microservice-eureka
+server:
+  port: 8761
+
+spring:
+  application:
+    name: ms-eureka
+  #  Configuracion de Config Server momentaneamente hasta configurar el ms-config
+  config:
+    import: optional:configserver:http://localhost:8888
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:${server.port}/eureka/
+
