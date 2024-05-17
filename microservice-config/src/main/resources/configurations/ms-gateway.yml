@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ms-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+#        - id: ms-bankaccount
+#          uri: lb://ms-bankaccount
+#          predicates:
+#            - Path=/bank-account/**
+#        - id: ms-credits
+#          uri: lb://ms-credits
+#          predicates:
+#            - Path=/credits/**
+#        - id: ms-transactions
+#          uri: lb://ms-transactions
+#          predicates:
+#            - Path=/transactions/**
+        - id: ms-client
+          uri: lb://ms-client
+          predicates:
+            - Path=/api/v1/customer-type/**
+#            - Path=/api/v1/client/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

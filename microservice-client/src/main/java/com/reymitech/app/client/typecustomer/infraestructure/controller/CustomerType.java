@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/v1/customer-type")
+@RequestMapping("/api/v1/customer-type")
 @RequiredArgsConstructor
 public class CustomerType {
 
