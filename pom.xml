@@ -19,6 +19,14 @@
     <!-- Se le indica a Maven que este sera el contenedor del proyecto-->
     <packaging>pom</packaging>
     <modules>
+        <module>microservice-gateway</module>
+        <module>microservice-eureka</module>
+        <module>microservice-config</module>
+
+        <module>microservice-client</module>
+        <module>microservice-bankaccount</module>
+        <module>microservice-credits</module>
+        <module>microservice-transactions</module>
     </modules>
 
     <properties>
