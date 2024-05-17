@@ -9,8 +9,8 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ms-client
-    username: client
+    url: jdbc:postgresql://localhost:5432/client
+    username: postgres
     password: reymitech
   jpa:
     hibernate:
