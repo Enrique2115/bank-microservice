@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:alpine
+    container_name: "bank-postgres"
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: "reymitech"
+      POSTGRES_MULTIPLE_DATABASES: credits, transactions, client, bankaccount
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./pg-init-scripts:/docker-entrypoint-initdb.d
