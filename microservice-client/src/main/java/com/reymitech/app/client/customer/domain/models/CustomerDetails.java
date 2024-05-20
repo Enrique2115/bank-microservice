@@ -29,4 +29,6 @@ public class CustomerDetails {
 
     /** Column for the address. */
     private String address;
+
+    private String document;
 }

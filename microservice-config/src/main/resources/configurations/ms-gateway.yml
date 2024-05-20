@@ -26,8 +26,8 @@ spring:
         - id: ms-client
           uri: lb://ms-client
           predicates:
-            - Path=/api/v1/customer-type/**
-#            - Path=/api/v1/client/**
+            - Path=/api/v1/**
+#            - Path=/api/v1/customer/**
 
 eureka:
   client:

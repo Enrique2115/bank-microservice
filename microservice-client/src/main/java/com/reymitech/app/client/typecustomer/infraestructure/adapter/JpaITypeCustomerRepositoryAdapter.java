@@ -3,10 +3,13 @@ package com.reymitech.app.client.typecustomer.infraestructure.adapter;
 import com.reymitech.app.client.typecustomer.domain.dtos.CreateCustomerType;
 import com.reymitech.app.client.typecustomer.domain.models.TypeCustomer;
 import com.reymitech.app.client.typecustomer.domain.port.out.ITypeCustomerRepositoryPort;
+import com.reymitech.app.client.utils.exceptions.GenericErrorResponse;
 import com.reymitech.app.client.utils.exceptions.NotFoundException;
 import com.reymitech.app.client.typecustomer.infraestructure.repository.JpaTypeCustomerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**
@@ -25,7 +28,7 @@ public class JpaITypeCustomerRepositoryAdapter implements ITypeCustomerRepositor
     public TypeCustomer createCustomerType(CreateCustomerType request) {
         // Validation if exists
         jpaTypeCustomerRepository.findByName(request.getName()).ifPresent(
-                typeCustomer -> { throw new NotFoundException("TypeCustomer already exists"); }
+                typeCustomer -> { throw new GenericErrorResponse("TypeCustomer already exists", HttpStatus.CONFLICT); }
         );
 
         TypeCustomer newtypeCustomer = TypeCustomer.builder().name(request.getName()).build();
