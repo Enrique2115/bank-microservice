@@ -1,5 +1,6 @@
 package com.reymitech.app.client.customer.domain.models;
 
+import com.reymitech.app.client.customer.domain.enums.Active;
 import com.reymitech.app.client.typecustomer.domain.models.TypeCustomer;
 import com.reymitech.app.client.utils.BaseEntity;
 import lombok.AllArgsConstructor;
@@ -7,11 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
 
 /**
  * Representa una clase Cliente que extiende BaseEntity.
@@ -46,4 +44,7 @@ public class Customer extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "type_customer_id", nullable = false)
     private TypeCustomer typeCustomer;
+
+    @Enumerated(EnumType.STRING)
+    private Active active;
 }

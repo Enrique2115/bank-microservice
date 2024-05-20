@@ -21,7 +21,7 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   @NonNull HttpHeaders headers,
                                                                   @NonNull HttpStatus status,
-                                                                  @NonNull WebRequest request){
+                                                                  @NonNull WebRequest request) {
 
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors()
@@ -33,6 +33,7 @@ public class GeneralExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> genericError(GenericErrorResponse exception) {
         Map<String, String> errors = new HashMap<>();
         errors.put("error", exception.getMessage());
+        errors.put("status", String.valueOf(exception.getHttpStatus().value()));
         return new ResponseEntity<>(errors, exception.getHttpStatus());
     }
 

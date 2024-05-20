@@ -1,15 +1,15 @@
 package com.reymitech.app.client.customer.infraestructure.controller;
 
 import com.reymitech.app.client.customer.application.service.ICustomerService;
-import com.reymitech.app.client.customer.domain.dto.CreateCustomerDTO;
+import com.reymitech.app.client.customer.domain.dto.CustomerDTO;
 import com.reymitech.app.client.customer.infraestructure.request.CustomerRequest;
-import com.reymitech.app.client.typecustomer.infraestructure.request.TypeCustomerRequest;
+import com.reymitech.app.client.customer.infraestructure.request.CustomerUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.core.Response;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,20 +22,39 @@ public class CustomerController {
     private final ModelMapper modelMapper;
 
     @GetMapping()
-    public ResponseEntity<List<CustomerRequest>> getAll() {
+    public ResponseEntity<List<CustomerDTO>> getAll() {
         return ResponseEntity.ok(
                 customerService.getAllCustomer()
                         .stream().map(
-                                customer -> modelMapper.map(customer, CustomerRequest.class)
+                                customer -> modelMapper.map(customer, CustomerDTO.class)
                         ).collect(Collectors.toList())
         );
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CustomerRequest> create(@RequestBody final CreateCustomerDTO createCustomerDTO) {
-
+    public ResponseEntity<CustomerDTO> create(@Valid @RequestBody final CustomerRequest createCustomerRequest) {
         return ResponseEntity.ok(
-                modelMapper.map(customerService.createCustomer(createCustomerDTO), CustomerRequest.class)
+                modelMapper.map(customerService.createCustomer(createCustomerRequest), CustomerDTO.class)
         );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomerDTO> getById(@PathVariable final String id) {
+        return ResponseEntity.ok(
+                modelMapper.map(customerService.getCustomerById(id), CustomerDTO.class)
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDTO> update(@PathVariable final String id, @RequestBody final CustomerUpdateRequest updateCustomerRequest) {
+        return ResponseEntity.ok(
+                modelMapper.map(customerService.updateCustomer(id, updateCustomerRequest), CustomerDTO.class)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final String id) {
+        customerService.deleteCustomer(id);
+        return ResponseEntity.ok().build();
     }
 }
