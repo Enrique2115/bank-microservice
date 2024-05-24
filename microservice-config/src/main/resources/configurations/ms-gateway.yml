@@ -15,6 +15,10 @@ spring:
           uri: lb://ms-bankaccount
           predicates:
             - Path=/api/v1/accounts/**
+        - id: ms-bank
+          uri: lb://ms-bankaccount
+          predicates:
+            - Path=/api/v1/bank/**
 #        - id: ms-credits
 #          uri: lb://ms-credits
 #          predicates:

@@ -7,8 +7,8 @@ public class CreateBankRequest {
 
     private String bankName;
     private String bankAddress;
-    private double savingsAccountsFee;
-    private double checkingAccountsFee;
-    private double fixedTermAccountsFee;
+    private double savingsAccountsLimit;
+    private double checkingAccountsLimit;
+    private double fixedTermAccountsLimit;
 
 }

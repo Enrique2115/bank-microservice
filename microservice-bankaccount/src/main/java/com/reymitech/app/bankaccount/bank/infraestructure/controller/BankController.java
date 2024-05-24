@@ -5,7 +5,9 @@ import com.reymitech.app.bankaccount.bank.domain.dtos.BankDTO;
 import com.reymitech.app.bankaccount.bank.infraestructure.request.CreateBankRequest;
 import com.reymitech.app.bankaccount.bank.infraestructure.request.UpdateBankRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BankController {
 
     private final IBankService bankService;
-    private final ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
 
     @RequestMapping("/get")
     public ResponseEntity<BankDTO> getBankById() {

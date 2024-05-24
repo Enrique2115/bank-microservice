@@ -23,20 +23,11 @@ public class Bank extends BaseEntity {
     @Column(name = "savings_accounts_limit", nullable = false)
     private double savingsAccountsLimit;
 
-    @Column(name = "checking_accounts_limit", nullable = false)
+    @Column(name = "checking_accounts_limit", nullable = true)
     private double checkingAccountsLimit;
 
     @Column(name = "fixed_term_accounts_limit", nullable = false)
     private double fixedTermAccountsLimit;
-
-    @Column(name = "savings_accounts_fee", nullable = false)
-    private double savingsAccountsFee;
-
-    @Column(name = "checking_accounts_fee", nullable = false)
-    private double checkingAccountsFee;
-
-    @Column(name = "fixed_term_accounts_fee", nullable = false)
-    private double fixedTermAccountsFee;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "active", nullable = false)

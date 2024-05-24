@@ -7,7 +7,6 @@ import com.reymitech.app.bankaccount.utils.Constants;
 import com.reymitech.app.bankaccount.utils.enums.Active;
 import com.reymitech.app.bankaccount.utils.enums.MantenimentFee;
 import com.reymitech.app.bankaccount.utils.exceptions.GenericErrorResponse;
-import jdk.jfr.Registered;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
@@ -23,12 +22,9 @@ public class CreateBankUseCase {
             Bank bank = Bank.builder()
                     .bankName(createBankRequest.getBankName())
                     .bankAddress(createBankRequest.getBankAddress())
-                    .savingsAccountsLimit(MantenimentFee.SAVINGS.getValue())
-                    .checkingAccountsLimit(MantenimentFee.CHECKING.getValue())
-                    .fixedTermAccountsLimit(MantenimentFee.FIXED_TERM.getValue())
-                    .savingsAccountsFee(createBankRequest.getSavingsAccountsFee())
-                    .checkingAccountsFee(createBankRequest.getCheckingAccountsFee())
-                    .fixedTermAccountsFee(createBankRequest.getFixedTermAccountsFee())
+                    .savingsAccountsLimit(createBankRequest.getSavingsAccountsLimit())
+                    .checkingAccountsLimit(createBankRequest.getCheckingAccountsLimit())
+                    .fixedTermAccountsLimit(createBankRequest.getFixedTermAccountsLimit())
                     .active(Active.ACTIVE)
                     .build();
 

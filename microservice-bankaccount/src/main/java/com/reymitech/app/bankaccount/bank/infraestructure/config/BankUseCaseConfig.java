@@ -5,11 +5,25 @@ import com.reymitech.app.bankaccount.bank.application.usecase.DesactiveBankUseCa
 import com.reymitech.app.bankaccount.bank.application.usecase.FindBankUseCase;
 import com.reymitech.app.bankaccount.bank.application.usecase.UpdateBankUseCase;
 import com.reymitech.app.bankaccount.bank.domain.port.IBankRepositoryPort;
+import org.modelmapper.Conditions;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class UseCaseConfig {
+public class BankUseCaseConfig {
+
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE)
+                .setPropertyCondition(Conditions.isNotNull());
+
+        return modelMapper;
+    }
 
     @Bean
     public CreateBankUseCase createBankUseCase(
