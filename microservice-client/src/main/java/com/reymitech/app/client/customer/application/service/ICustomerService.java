@@ -14,6 +14,8 @@ public interface ICustomerService {
 
     Customer getCustomerById(String id);
 
+    Customer getCustomerDocument(String document);
+
     Customer updateCustomer(String id, CustomerUpdateRequest updateCustomerRequest);
 
     void deleteCustomer(String id);

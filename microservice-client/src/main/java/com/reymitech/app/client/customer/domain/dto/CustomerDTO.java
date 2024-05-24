@@ -10,4 +10,5 @@ public class CustomerDTO {
     private String username;
     private String email;
     private CustomerDetails customerDetails;
+    private TypeCustomerDTO typeCustomer;
 }

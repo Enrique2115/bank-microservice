@@ -31,7 +31,9 @@ public class JpaCustomerRepositoryAdapter implements ICustomerRepositoryPort {
     public Customer createCustomer(CustomerRequest createCustomerRequest) {
 
         jpaCustomerRepository.findCustomerByCustomerDetailsDocument(createCustomerRequest.getDocument()).ifPresent(
-                customer -> { throw new GenericErrorResponse( "Cliente ya existe", HttpStatus.CONFLICT); }
+                customer -> {
+                    throw new GenericErrorResponse("Cliente ya existe", HttpStatus.CONFLICT);
+                }
         );
 
         var typeCustomer = findTypeCustomerByName(createCustomerRequest.getTypeCustomer());
@@ -65,6 +67,13 @@ public class JpaCustomerRepositoryAdapter implements ICustomerRepositoryPort {
     @Override
     public Customer getCustomerById(String id) {
         return findCustomerById(id);
+    }
+
+    @Override
+    public Customer getCustomerDocument(String document) {
+        return jpaCustomerRepository.findCustomerByCustomerDetailsDocument(document).orElseThrow(
+                () -> new NotFoundException("Cliente no encontrado")
+        );
     }
 
     @Override
