@@ -27,13 +27,6 @@ public class AccountController {
     private final UpdateAccountBalanceUseCase updateAccountBalanceUseCase;
     private final ModelMapper modelMapper = new ModelMapper();
 
-    private final ICustomerServiceClient customerServiceClient;
-
-    @GetMapping("/balance")
-    public String getBalance() {
-        return "100";
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable final String id) {
         return ResponseEntity.ok(
