@@ -31,6 +31,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public Customer getCustomerDocument(String document) {
+        return customerRepositoryPort.getCustomerDocument(document);
+    }
+
+    @Override
     public Customer updateCustomer(String id, CustomerUpdateRequest customerRequest) {
         return customerRepositoryPort.updateCustomer(id, customerRequest);
     }

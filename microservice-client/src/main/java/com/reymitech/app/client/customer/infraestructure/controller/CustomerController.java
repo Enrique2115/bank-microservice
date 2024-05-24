@@ -45,6 +45,13 @@ public class CustomerController {
         );
     }
 
+    @GetMapping("/document")
+    public ResponseEntity<CustomerDTO> getDocument(@RequestParam final String document) {
+        return ResponseEntity.ok(
+                modelMapper.map(customerService.getCustomerDocument(document), CustomerDTO.class)
+        );
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<CustomerDTO> update(@PathVariable final String id, @RequestBody final CustomerUpdateRequest updateCustomerRequest) {
         return ResponseEntity.ok(
