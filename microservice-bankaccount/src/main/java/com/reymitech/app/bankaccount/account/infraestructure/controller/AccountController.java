@@ -3,9 +3,9 @@ package com.reymitech.app.bankaccount.account.infraestructure.controller;
 import com.reymitech.app.bankaccount.account.application.client.ICustomerServiceClient;
 import com.reymitech.app.bankaccount.account.application.usecases.*;
 import com.reymitech.app.bankaccount.account.domain.dtos.AccountDto;
-import com.reymitech.app.bankaccount.account.domain.dtos.CustomerDto;
 import com.reymitech.app.bankaccount.account.infraestructure.request.CreateBusinessAccountRequest;
 import com.reymitech.app.bankaccount.account.infraestructure.request.CreatePersonalAccountRequest;
+import com.reymitech.app.bankaccount.account.infraestructure.request.UpdateAccountBalanceRequest;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,7 @@ public class AccountController {
     private final FindAccountByIdUseCase findAccountByIdUseCase;
     private final FindAllAccountsUseCase findAllAccountsUseCase;
     private final FindAccountByCustomerIdUseCase findAccountByCustomerIdUseCase;
+    private final UpdateAccountBalanceUseCase updateAccountBalanceUseCase;
     private final ModelMapper modelMapper = new ModelMapper();
 
     private final ICustomerServiceClient customerServiceClient;
@@ -75,6 +76,15 @@ public class AccountController {
     ) {
         return ResponseEntity.ok(
                 modelMapper.map(createBusinessAccountUseCase.execute(document, request), AccountDto.class)
+        );
+    }
+
+    @PatchMapping("/balance")
+    public ResponseEntity<AccountDto> updateAccountBalance(
+            @RequestBody final UpdateAccountBalanceRequest request
+    ) {
+        return ResponseEntity.ok(
+                modelMapper.map(updateAccountBalanceUseCase.execute(request), AccountDto.class)
         );
     }
 

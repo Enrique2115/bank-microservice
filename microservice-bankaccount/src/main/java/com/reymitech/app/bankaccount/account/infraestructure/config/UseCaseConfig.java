@@ -49,4 +49,9 @@ public class UseCaseConfig {
     public FindAccountByCustomerIdUseCase findAccountByCustomerIdUseCase(IAccountRepositoryPort accountRepository) {
         return new FindAccountByCustomerIdUseCase(accountRepository);
     }
+
+    @Bean
+    public UpdateAccountBalanceUseCase updateAccountBalanceUseCase(IAccountRepositoryPort accountRepository) {
+        return new UpdateAccountBalanceUseCase(accountRepository);
+    }
 }

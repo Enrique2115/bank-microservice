@@ -6,6 +6,7 @@ public class Constants {
     public static final String LIMIT_ACCOUNT_CREATED = "Límite de cuenta alcanzado para el tipo de cliente [%s]";
     public static final String EXCEPTION_BUSINESS_ACCOUNT = "No puede crear cuentas de tipo ahorro o de plazo fijo, para el tipo de cliente [%s]";
     public static final String EXCEPTION_NOT_FOUND_ACCOUNT = "No se encontró la cuenta [%s]";
+    public static final String EXCEPTION_BALANCE_NEGATIVE = "La cuenta no puede tener un saldo negativo";
     public static final String EXCEPTION_NOT_FOUND_CUSTOMER = "No se encontró el cliente [%s]";
     public static final String EXCEPTION_NOT_FOUND_PERSONAL_ACCOUNT = "No se encontró la cuenta personal [%s]";
     public static final String EXCEPTION_NOT_FOUND_BUSINESS_ACCOUNT = "No se encontró la cuenta empresarial [%s]";

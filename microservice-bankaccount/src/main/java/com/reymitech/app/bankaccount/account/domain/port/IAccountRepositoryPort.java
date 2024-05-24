@@ -15,4 +15,6 @@ public interface IAccountRepositoryPort {
     List<Account> findAllAccounts();
 
     List<Account> findAccountByCustomerId(String customerId);
+
+    Account findAccountByAccountNumber(String accountNumber);
 }

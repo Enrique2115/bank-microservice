@@ -13,4 +13,6 @@ public interface JpaAccountRepository extends CrudRepository<Account, String> {
     List<Account> findAccountByActive(Active active);
 
     List<Account> findAccountByCustomerId(String customerId);
+
+    Account findAccountByAccountNumber(String accountNumber);
 }

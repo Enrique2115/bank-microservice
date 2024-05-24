@@ -38,4 +38,9 @@ public class AccountRepositoryAdapter implements IAccountRepositoryPort {
         return accountRepository.findAccountByCustomerId(customerId);
     }
 
+    @Override
+    public Account findAccountByAccountNumber(String accountNumber) {
+        return accountRepository.findAccountByAccountNumber(accountNumber);
+    }
+
 }
