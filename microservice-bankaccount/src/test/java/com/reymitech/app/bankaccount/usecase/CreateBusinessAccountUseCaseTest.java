@@ -1,15 +1,15 @@
 package com.reymitech.app.bankaccount.usecase;
 
 import com.reymitech.app.bankaccount.account.application.client.ICustomerServiceClient;
-import com.reymitech.app.bankaccount.account.application.service.AccountValidationService;
-import com.reymitech.app.bankaccount.account.application.usecases.CreatePersonalAccountUseCase;
+import com.reymitech.app.bankaccount.account.application.usecases.CreateBusinessAccountUseCase;
 import com.reymitech.app.bankaccount.account.domain.dtos.CustomerDto;
 import com.reymitech.app.bankaccount.account.domain.dtos.TypeCustomerDto;
-import com.reymitech.app.bankaccount.account.domain.enums.CustomerType;
 import com.reymitech.app.bankaccount.account.domain.models.Account;
 import com.reymitech.app.bankaccount.account.domain.port.IAccountRepositoryPort;
+import com.reymitech.app.bankaccount.account.domain.port.IAccountValidationService;
 import com.reymitech.app.bankaccount.account.domain.port.ICreditCardNumberGenerator;
-import com.reymitech.app.bankaccount.account.infraestructure.request.CreatePersonalAccountRequest;
+import com.reymitech.app.bankaccount.account.infraestructure.request.CreateBusinessAccountRequest;
+
 import com.reymitech.app.bankaccount.utils.enums.Active;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,13 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class CreatePersonalAccountUseCaseTest {
+class CreateBusinessAccountUseCaseTest {
 
     @Mock
     private IAccountRepositoryPort accountRepository;
@@ -36,10 +33,10 @@ public class CreatePersonalAccountUseCaseTest {
     private ICreditCardNumberGenerator creditCardNumberGenerator;
 
     @Mock
-    private AccountValidationService accountValidationService;
+    private IAccountValidationService accountValidationService;
 
     @InjectMocks
-    private CreatePersonalAccountUseCase createPersonalAccountUseCase;
+    private CreateBusinessAccountUseCase createBusinessAccountUseCase;
 
     @BeforeEach
     void setUp() {
@@ -47,32 +44,28 @@ public class CreatePersonalAccountUseCaseTest {
     }
 
     @Test
-    void execute_shouldCreatePersonalAccount_whenValid() {
+    void execute_shouldCreateBusinessAccount_whenValid() {
         // Arrange
         String customerId = "123";
-        CreatePersonalAccountRequest request = new CreatePersonalAccountRequest();
-        request.setNameAccount("Checking Account");
+        CreateBusinessAccountRequest request = new CreateBusinessAccountRequest();
+        request.setNameAccount("Business Account");
         request.setTypeAccount("checking");
-        request.setBalance(1000.0);
-
-        TypeCustomerDto typeCustomer = new TypeCustomerDto();
-        typeCustomer.setName("PERSONAL");
+        request.setBalance(5000.0);
 
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customerId);
-        customerDto.setUsername("John Doe");
-        customerDto.setTypeCustomer(typeCustomer);
-        customerDto.setEmail("johndoe@gmail.com");
-        when(customerServiceClient.getCustomerByDocument(customerId)).thenReturn(customerDto);
+        customerDto.setUsername("Acme Corp");
+        customerDto.setEmail("acmecorp@gmail.com");
+        customerDto.setTypeCustomer(new TypeCustomerDto());
 
-        when(accountRepository.findAccountByCustomerId(customerId)).thenReturn(Collections.emptyList());
-        when(accountValidationService.validatePersonalAccount(customerDto, Collections.emptyList())).thenReturn(true);
-        when(creditCardNumberGenerator.generate("295963", 16)).thenReturn("2959631234567890");
+        when(customerServiceClient.getCustomerByDocument(customerId)).thenReturn(customerDto);
+        when(accountValidationService.validateBusinessAccount(customerDto, request.getTypeAccount())).thenReturn(true);
+        when(creditCardNumberGenerator.generate("295963", 16)).thenReturn("2959639876543210");
 
         ArgumentCaptor<Account> accountCaptor = ArgumentCaptor.forClass(Account.class);
 
-        // Account created
-        Account createdAccount = createPersonalAccountUseCase.execute(customerId, request);
+        // Act
+        Account createdAccount = createBusinessAccountUseCase.execute(customerId, request);
 
         // Assert
         verify(accountRepository, times(1)).save(accountCaptor.capture());
@@ -91,27 +84,25 @@ public class CreatePersonalAccountUseCaseTest {
     void execute_shouldThrowException_whenValidationFails() {
         // Arrange
         String customerId = "123";
-        CreatePersonalAccountRequest request = new CreatePersonalAccountRequest();
-        request.setNameAccount("Checking Account");
+        CreateBusinessAccountRequest request = new CreateBusinessAccountRequest();
+        request.setNameAccount("Business Account");
         request.setTypeAccount("checking");
-        request.setBalance(1000.0);
+        request.setBalance(5000.0);
 
         CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customerId);
-        customerDto.setUsername("John Doe");
-        customerDto.setEmail("johndoe@gmail.com");
-
+        customerDto.setUsername("Acme Corp");
+        customerDto.setEmail("acmecorp@gmail.com");
+        customerDto.setTypeCustomer(new TypeCustomerDto());
         when(customerServiceClient.getCustomerByDocument(customerId)).thenReturn(customerDto);
 
-        List<Account> existingAccounts = Collections.singletonList(new Account());
-        when(accountRepository.findAccountByCustomerId(customerId)).thenReturn(existingAccounts);
-        when(accountValidationService.validatePersonalAccount(customerDto, existingAccounts)).thenReturn(false);
+        when(accountValidationService.validateBusinessAccount(customerDto, request.getTypeAccount())).thenReturn(false);
 
         // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            createPersonalAccountUseCase.execute(customerId, request);
+            createBusinessAccountUseCase.execute(customerId, request);
         });
 
-        assertEquals("Validacion de la cuenta no se pudo realizar", exception.getMessage());
+        assertEquals("Validation failed", exception.getMessage());
     }
 }
