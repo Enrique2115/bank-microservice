@@ -11,10 +11,10 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-#        - id: ms-bankaccount
-#          uri: lb://ms-bankaccount
-#          predicates:
-#            - Path=/bank-account/**
+        - id: ms-bankaccount
+          uri: lb://ms-bankaccount
+          predicates:
+            - Path=/api/v1/accounts/**
 #        - id: ms-credits
 #          uri: lb://ms-credits
 #          predicates:
