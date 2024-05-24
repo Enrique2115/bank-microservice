@@ -23,10 +23,10 @@ spring:
 #          uri: lb://ms-credits
 #          predicates:
 #            - Path=/credits/**
-#        - id: ms-transactions
-#          uri: lb://ms-transactions
-#          predicates:
-#            - Path=/transactions/**
+        - id: ms-transactions
+          uri: lb://ms-transactions
+          predicates:
+            - Path=/api/v1/transactions/**
         - id: ms-client
           uri: lb://ms-client
           predicates:
